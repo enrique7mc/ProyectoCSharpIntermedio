@@ -74,7 +74,7 @@ namespace ProyectoCSharpIntermedio
                     }
                     break;
                 case Instrucciones.Cd:
-                    if (argumentos.Length == 1 && (!Directory.Exists(argumentos[0]) || argumentos[0] != ".."))
+                    if (argumentos.Length == 1 && !Directory.Exists(argumentos[0]) && argumentos[0] != "..")
                     {
                         throw new ComandoInvalidoException
                             (string.Format("El directorio {0} no existe", argumentos[0]));
