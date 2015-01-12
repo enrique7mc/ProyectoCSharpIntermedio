@@ -8,7 +8,7 @@ namespace ProyectoCSharpIntermedio
     public class Comando
     {
         public Instrucciones Instruccion { get; set; }
-        public IEnumerable<string> Argumentos { get; set; }
+        public string[] Argumentos { get; set; }
 
         public Comando(string instruccion, string[] argumentos)
         {
@@ -58,7 +58,7 @@ namespace ProyectoCSharpIntermedio
                         throw new ComandoInvalidoException
                             (string.Format("El comando {0} recibe 2 argumentos", Instruccion));
                     }
-                    break;
+                    break;                
             }
         }
 
@@ -98,6 +98,8 @@ namespace ProyectoCSharpIntermedio
         Cd,
         Copy,
         Move,
-        Touch
+        Touch,
+        Exit,
+        Cls
     }
 }
