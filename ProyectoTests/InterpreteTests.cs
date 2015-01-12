@@ -14,15 +14,27 @@ namespace ProyectoTests
         {
             string[] cadenas =
             {
-                "dir", "cd directorio", "copy archivo otro archivo",
-                "", "   ", "touch archivo"
+                "dir", 
+                @"cd C:\Users\Enrique", 
+                @"copy C:\Users\Enrique\ex01.sql otro_archivo",
+                "", 
+                "   ", 
+                "touch archivo"
             };
 
             List<Comando> resultados = new List<Comando>();
 
             foreach(var cadena in cadenas)
             {
-                resultados.Add(InterpreteDeComandos.Interpretar(cadena));
+                try
+                {
+                    var c = InterpreteDeComandos.Interpretar(cadena);
+                    resultados.Add(c);
+                }
+                catch(ComandoInvalidoException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }                
             }
 
             Assert.AreEqual(4, resultados.Count);
