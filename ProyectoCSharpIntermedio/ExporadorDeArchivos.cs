@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProyectoCSharpIntermedio
 {
@@ -14,7 +10,6 @@ namespace ProyectoCSharpIntermedio
         public string DirectorioActual
         {
             get { return _directoryInfo.FullName; }
-            private set { }
         }
 
         public ExporadorDeArchivos(string directorioActual)
@@ -31,6 +26,15 @@ namespace ProyectoCSharpIntermedio
                     break;  
                 case Instrucciones.Cd:
                     Cd(comando.Argumentos);
+                    break;
+                case Instrucciones.Touch:
+                    Touch(comando.Argumentos);
+                    break;
+                case Instrucciones.Copy:
+                    Copy(comando.Argumentos);
+                    break;
+                case Instrucciones.Move:
+                    Move(comando.Argumentos);
                     break;
                 case Instrucciones.Cls:
                     Cls();
@@ -62,23 +66,33 @@ namespace ProyectoCSharpIntermedio
             }
         }
 
-        private void Cls()
+        private static void Cls()
         {
             Console.Clear();
         }
 
-        private void ListarContenidoDirectorio(string rutaDirectorio)
+        private void Touch(string[] argumentos)
+        {
+            using(File.Create(Path.Combine(DirectorioActual, argumentos[0])));
+        }
+
+        private static void Copy(string[] argumentos)
+        {            
+            File.Copy(argumentos[0], argumentos[1], false);            
+        }
+
+        private static void Move(string[] argumentos)
+        {
+            File.Move(argumentos[0], argumentos[1]);
+        }
+
+        private static void ListarContenidoDirectorio(string rutaDirectorio)
         {
             var contenido = new DirectoryInfo(rutaDirectorio).EnumerateFileSystemInfos();
             foreach(var entrada in contenido)
             {
                 Console.WriteLine(entrada.Name);
             }
-        }
-
-        private void CambiarDirectorioActual(string rutaDirectorio)
-        {
-            DirectorioActual = rutaDirectorio;
         }
     }
 }
