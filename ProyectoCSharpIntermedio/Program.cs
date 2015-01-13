@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,17 +14,20 @@ namespace ProyectoCSharpIntermedio
 
         static void Main(string[] args)
         {
-            string entrada;
             while(true)
             {
                 try
                 {
-                    entrada = Promt();
+                    string entrada = Promt();
                     Exporador.EjecutaComando(InterpreteDeComandos.Interpretar(entrada));
                 }
                 catch(ComandoInvalidoException e)
                 {
-                    Console.WriteLine(e.Message);                    
+                    Console.WriteLine(e.Message);
+                }
+                catch(IOException e)
+                {
+                    Console.WriteLine("Ocurrió un error: {0}", e.Message);
                 }
             }
         }
