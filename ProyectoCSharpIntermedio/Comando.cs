@@ -90,6 +90,11 @@ namespace ProyectoCSharpIntermedio
                     break;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1}", Instruccion, string.Join(" ", Argumentos));
+        }
     }
 
     public enum Instrucciones
@@ -100,6 +105,7 @@ namespace ProyectoCSharpIntermedio
         Move,
         Touch,
         Exit,
-        Cls
+        Cls,
+        History
     }
 }
