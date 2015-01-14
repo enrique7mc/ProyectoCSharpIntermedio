@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ProyectoCSharpIntermedio
@@ -6,6 +7,7 @@ namespace ProyectoCSharpIntermedio
     public class ExporadorDeArchivos
     {
         private DirectoryInfo _directoryInfo;
+        public List<Comando> Comandos { get; private set; }
 
         public string DirectorioActual
         {
@@ -15,10 +17,13 @@ namespace ProyectoCSharpIntermedio
         public ExporadorDeArchivos(string directorioActual)
         {
             _directoryInfo = new DirectoryInfo(directorioActual);
+            Comandos = new List<Comando>();
         }
 
         public void EjecutaComando(Comando comando)
         {
+            Comandos.Add(comando);
+
             switch(comando.Instruccion)
             {
                 case Instrucciones.Dir:
@@ -35,6 +40,9 @@ namespace ProyectoCSharpIntermedio
                     break;
                 case Instrucciones.Move:
                     Move(comando.Argumentos);
+                    break;
+                case Instrucciones.History:
+                    History();
                     break;
                 case Instrucciones.Cls:
                     Cls();
@@ -73,7 +81,7 @@ namespace ProyectoCSharpIntermedio
 
         private void Touch(string[] argumentos)
         {
-            using(File.Create(Path.Combine(DirectorioActual, argumentos[0])));
+            using (File.Create(Path.Combine(DirectorioActual, argumentos[0]))) { }
         }
 
         private static void Copy(string[] argumentos)
@@ -84,6 +92,14 @@ namespace ProyectoCSharpIntermedio
         private static void Move(string[] argumentos)
         {
             File.Move(argumentos[0], argumentos[1]);
+        }
+
+        private void History()
+        {
+            foreach(var comando in Comandos)
+            {
+                Console.WriteLine(comando);
+            }
         }
 
         private static void ListarContenidoDirectorio(string rutaDirectorio)
